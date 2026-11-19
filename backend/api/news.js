@@ -7,7 +7,7 @@ const ALLOWED_PARAMS = new Set([
   'sortBy',
 ]);
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
@@ -20,7 +20,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ status: 'error', message: 'Method not allowed' });
   }
 
-  const apiKey = process.env.NEWS_API_KEY;
+  const apiKey = (process.env.NEWS_API_KEY || '').trim();
   if (!apiKey) {
     return res.status(500).json({
       status: 'error',
